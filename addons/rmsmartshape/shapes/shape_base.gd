@@ -1212,8 +1212,10 @@ func _weld_quad_array(
 		# See http://reedbeta.com/blog/quadrilateral-interpolation-part-1/
 		if this_quad.self_intersects():
 			quads.remove(index)
-			_weld_quad_array(quads, custom_scale, weld_first_and_last, index - 1)
-			return
+			if index < quads.size():
+				var new_index = max(index - 1, 0)
+				_weld_quad_array(quads, custom_scale, weld_first_and_last, new_index)
+				return
 
 	if weld_first_and_last:
 		_weld_quads(quads.back(), quads[0], 1.0)
@@ -1624,6 +1626,9 @@ func _get_previous_unique_point_idx(idx: int, pts: Array, wrap_around: bool):
 
 func _build_edge_with_material(edge_data: EdgeMaterialData, c_offset: float, wrap_around: bool) -> SS2D_Edge:
 	var edge = SS2D_Edge.new()
+	edge.z_index = edge_data.meta_material.z_index
+	edge.z_as_relative = edge_data.meta_material.z_as_relative
+	edge.material = edge_data.meta_material.edge_material.material
 	if not edge_data.is_valid():
 		return edge
 
