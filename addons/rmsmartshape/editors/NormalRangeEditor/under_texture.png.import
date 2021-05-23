@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/grass-corner.png-70852dbb84faf2e7b932eb4bbb019cf5.stex"
+path="res://.import/under_texture.png-87a243e17179ba2b162ef41ea65a8e51.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://demo/assets/Spring/grass-corner.png"
-dest_files=[ "res://.import/grass-corner.png-70852dbb84faf2e7b932eb4bbb019cf5.stex" ]
+source_file="res://addons/rmsmartshape/editors/NormalRangeEditor/under_texture.png"
+dest_files=[ "res://.import/under_texture.png-87a243e17179ba2b162ef41ea65a8e51.stex" ]
 
 [params]
 

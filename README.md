@@ -3,11 +3,16 @@ SmartShape2D
 ![Sample Image]( ./addons/rmsmartshape/documentation/imgs/sample.png )
 ![Sample Gif]( ./addons/rmsmartshape/documentation/imgs/sample.gif )
 
+SmartShape2D + Aseprite tutorial can be found here (Thanks Picster!):
+
+[![VideoTutorial](https://img.youtube.com/vi/r-pd2yuNPvA/0.jpg)](http://www.youtube.com/watch?v=r-pd2yuNPvA)
+
 # About
 This plugin allows you to create nicely textured 2D polys.
 Simply place a few points then create / assign the shape material and you should have a good looking polygon.
 
 The textures used are similar to what you would use if making terrain using TileMaps/TileSets
+
 
 **This plugin is under ACTIVE DEVELOPMENT! If you find any issues, by all means let us know.
 Read the section below on Contributing and post an issue if one doesn't already exist**
@@ -22,10 +27,8 @@ Read the section below on Contributing and post an issue if one doesn't already 
 - Should work with later versions of Godot 3.x
 
 # Demo
-There is a demo scene in the addon's directory.
-- <PROJECT_ROOT>/addons/rmsmartshape/demo
-  - <PROJECT_ROOT> is your project's root folder (the folder containing the "project.godot" file)
-- You can open demo.tscn in your project after installing the addon.
+A Sample Godot Project can be found here:
+https://github.com/SirRamEsq/SmartShape2D-DemoProject
 
 # Documentation
 - [How To Install]( ./addons/rmsmartshape/documentation/Install.md )

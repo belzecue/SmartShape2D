@@ -140,6 +140,9 @@ var cached_shape_global_transform: Transform2D
 # Action Move Variables
 var _mouse_motion_delta_starting_pos = Vector2(0, 0)
 
+# Track the property plugin
+var plugin
+
 #######
 # GUI #
 #######
@@ -209,6 +212,7 @@ func _gui_build_toolbar():
 	tb_snap_popup.connect("id_pressed", self, "_snapping_item_selected")
 
 	tb_hb.hide()
+	tb_hb_legacy_import.hide()
 
 
 func create_tool_button(icon, tooltip):
@@ -304,18 +308,32 @@ func _ready():
 
 
 func _enter_tree():
+	plugin = preload("res://addons/rmsmartshape/inpsector_plugin.gd").new()
+	if plugin != null:
+		add_inspector_plugin(plugin)
+		
 	pass
 
 
 func _exit_tree():
+	if (plugin != null):
+		remove_inspector_plugin(plugin)
+		
 	gui_point_info_panel.visible = false
 	gui_edge_info_panel.visible = false
 	remove_control_from_container(EditorPlugin.CONTAINER_CANVAS_EDITOR_MENU, tb_hb)
-
+	remove_control_from_container(EditorPlugin.CONTAINER_CANVAS_EDITOR_MENU, tb_hb_legacy_import)
+	tb_hb.queue_free()
+	tb_hb_legacy_import.queue_free()
 
 func forward_canvas_gui_input(event):
 	if not is_shape_valid(shape):
 		return false
+
+	# Force update if global transforma has been changed
+	if cached_shape_global_transform != shape.get_global_transform():
+		shape.set_as_dirty()
+		cached_shape_global_transform = shape.get_global_transform()
 
 	var et = get_et()
 	var grab_threshold = get_editor_interface().get_editor_settings().get(
@@ -334,22 +352,6 @@ func forward_canvas_gui_input(event):
 
 	_gui_update_info_panels()
 	return return_value
-
-
-func _process(delta):
-	if not Engine.editor_hint:
-		return
-
-	if not is_shape_valid(shape):
-		gui_point_info_panel.visible = false
-		gui_edge_info_panel.visible = false
-		shape = null
-		update_overlays()
-		return
-	# Force update if global transforma has been changed
-	if cached_shape_global_transform != shape.get_global_transform():
-		shape.set_as_dirty()
-		cached_shape_global_transform = shape.get_global_transform()
 
 
 func handles(object):
@@ -393,6 +395,11 @@ func edit(object):
 
 		shape = object
 		connect_shape(shape)
+
+	if not is_shape_valid(shape):
+		gui_point_info_panel.visible = false
+		gui_edge_info_panel.visible = false
+		shape = null
 
 	update_overlays()
 
